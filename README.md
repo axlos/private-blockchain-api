@@ -10,7 +10,7 @@ Create a web API using a Node.js framework that will interact with the private b
 + Access to the endpoint:
     - Finding a block: GET http://localhost:3000/block/0
     - Creating a new block with data: POST http://localhost:3000/block
-
+ 
 ### Prerequisites
 
 + node --version = v10.9.0

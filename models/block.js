@@ -7,7 +7,6 @@ class Block {
 		this.previousBlockHash = "";
 	}
 }
-
 module.exports = {
 	Block: Block,
 };

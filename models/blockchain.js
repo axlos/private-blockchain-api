@@ -3,7 +3,6 @@
 |  =========================================================*/
 
 const SHA256 = require('crypto-js/sha256');
-
 /**
  * Configure simpleChain.js with levelDB to persist blockchain dataset using the level Node.js library.
  */
