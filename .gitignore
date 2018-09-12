@@ -4,6 +4,7 @@
 /dist
 /tmp
 /out-tsc
+/chaindata
 
 # dependencies
 /node_modules
