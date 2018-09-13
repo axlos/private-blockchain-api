@@ -17,7 +17,8 @@ router.get('/:blockId', function (req, res) {
 
 /* POST new block to the chain. */
 router.post('/', [
-	body('data').exists().withMessage('Data must be exists'),
+	body('data').exists().withMessage('Data must be exists')
+		.not().isEmpty().trim().withMessage('Data must be not empty')
 ], function (req, res) {
 	// Finds the validation errors in this request and wraps them in an object with handy functions
 	const errors = validationResult(req);
@@ -26,17 +27,27 @@ router.post('/', [
 	}
 
 	const chain = new blockchain.Blockchain();
+	// Is there Genesis block?
+	chain.getBlockHeight().then(count => {
+		if (count < 0) {
+			chain.addBlock(new block.Block("First block in the chain - Genesis block"))
+				.then(() => addBlock(res, chain, req.body.data))
+				.catch(err => res.status(500).json(err));
+		} else {
+			addBlock(res, chain, req.body.data);
+		}
+	});
 
-	chain.addBlock(new block.Block(req.body.data)).then(hash => {
+});
+
+addBlock = function (res, chain, data) {
+	chain.addBlock(new block.Block(data)).then(hash => {
 		chain.findByHash(hash).then(block =>
 			res.status(200).json(block)
 		).catch(err =>
 			res.status(500).json(err)
 		);
-	}).catch(err => {
-		res.status(500).json(err);
-	});
-
-});
+	}).catch(err => res.status(500).json(err));
+};
 
 module.exports = router;

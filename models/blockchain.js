@@ -12,14 +12,6 @@ const db = level(chainDB);
 const block = require('./block');
 
 class Blockchain {
-	constructor() {
-		// Is there Genesis block?
-		this.getBlockHeight().then(count => {
-			if (count < 0) {
-				this.addBlock(new block.Block("First block in the chain - Genesis block"));
-			}
-		});
-	}
 
 	// Add new block
 	addBlock(newBlock) {
